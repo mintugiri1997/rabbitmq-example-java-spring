@@ -1,4 +1,4 @@
-package com.mintu.rabbitmqexample;
+package com.mintu.rabbitmqexample.Connections;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 
 @Service
-public class FirebaseInit {
+public class FirebaseConnection {
 
     @PostConstruct
     public void init() {

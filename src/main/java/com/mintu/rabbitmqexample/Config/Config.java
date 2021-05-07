@@ -1,5 +1,6 @@
-package com.mintu.rabbitmqexample;
+package com.mintu.rabbitmqexample.Config;
 
+import com.mintu.rabbitmqexample.Consumers.Consumer;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -13,13 +14,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Config {
 
-    public static final String QUEUE = "request";
     public static final String EXCHANGE = "exchange";
-    public static final String ROUTING_KEY = "routing_key";
+    public static final String REQUEST_QUEUE = "request";
+    public static final String REQUEST_ROUTING_KEY = "request_routing_key";
+    public static final String EVENTS_QUEUE = "events";
+    public static final String EVENTS_ROUTING_KEY = "events_routing_key";
 
     @Bean
-    public Queue queue() {
-        return new Queue(QUEUE);
+    public Queue queue1() {
+        return new Queue(REQUEST_QUEUE);
+    }
+
+    @Bean
+    public Queue queue2() {
+        return new Queue(EVENTS_QUEUE);
     }
 
     @Bean
@@ -28,8 +36,13 @@ public class Config {
     }
 
     @Bean
-    public Binding bind(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
+    public Binding bind1(TopicExchange exchange) {
+        return BindingBuilder.bind(queue1()).to(exchange).with(REQUEST_ROUTING_KEY);
+    }
+
+    @Bean
+    public Binding bind2(TopicExchange exchange) {
+        return BindingBuilder.bind(queue2()).to(exchange).with(EVENTS_ROUTING_KEY);
     }
 
     @Bean
@@ -48,7 +61,7 @@ public class Config {
     public SimpleMessageListenerContainer listenerContainer(Consumer consumer) {
         SimpleMessageListenerContainer listenerContainer = new SimpleMessageListenerContainer();
         listenerContainer.setConnectionFactory(connectionFactory());
-        listenerContainer.setQueueNames(QUEUE);
+        listenerContainer.setQueueNames(REQUEST_QUEUE, EVENTS_QUEUE);
         listenerContainer.setMessageListener(consumer);
         listenerContainer.setAcknowledgeMode(AcknowledgeMode.MANUAL);
         listenerContainer.setConcurrency("4");

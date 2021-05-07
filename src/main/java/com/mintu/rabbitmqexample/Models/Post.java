@@ -1,4 +1,4 @@
-package com.mintu.rabbitmqexample;
+package com.mintu.rabbitmqexample.Models;
 
 public class Post {
 

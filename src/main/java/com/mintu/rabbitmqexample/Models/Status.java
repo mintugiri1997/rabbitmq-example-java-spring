@@ -1,4 +1,4 @@
-package com.mintu.rabbitmqexample;
+package com.mintu.rabbitmqexample.Models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

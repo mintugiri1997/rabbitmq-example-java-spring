@@ -1,5 +1,7 @@
-package com.mintu.rabbitmqexample;
+package com.mintu.rabbitmqexample.Publishers;
 
+import com.mintu.rabbitmqexample.Models.Request;
+import com.mintu.rabbitmqexample.Models.Status;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,4 +25,6 @@ public class Publisher {
 
         return "Success";
     }
+
+
 }
